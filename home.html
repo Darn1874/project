@@ -29,6 +29,7 @@
             background-color: #2d3748; /* Tailwind's gray-700 */
             border-radius: 8px;
             margin-bottom: 20px;
+            position: relative;
         }
         .nav-item {
             margin-left: 10px;
@@ -56,7 +57,23 @@
         }
         .logo {
             height: 40px; /* Adjust size as needed */
-            margin-right: auto;
+        }
+        .navbar-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+        }
+        @media (max-width: 640px) {
+            .navbar-toggle {
+                display: block;
+            }
+            .navbar-content {
+                display: none;
+                width: 100%;
+            }
+            .navbar-content.show {
+                display: block;
+            }
         }
     </style>
 </head>
@@ -64,16 +81,19 @@
     <div class="container">
         <div class="navbar">
             <!-- Logo visible on small screens only -->
-            <img src="logo.png" alt="Logo" class="logo block sm:hidden">
+            <img src="<box-icon name='list-check'></box-icon>" alt="Logo" class="logo block sm:hidden">
 
-            <h1 class="text-2xl font-bold text-white">Dashboard</h1>
-            
-            <div class="flex flex-wrap sm:flex-nowrap items-center">
-                <span class="nav-item" id="profile">User Profile</span>
-                <span class="nav-item" id="messages">Messages</span>
-                <span class="nav-item" id="status">Status</span>
-                <span class="nav-item" id="settings">Settings</span>
-                <span class="nav-item" id="logout-btn">Log Out</span>
+            <span class="navbar-toggle" id="navbar-toggle">&#9776;</span>
+
+            <div class="navbar-content flex flex-wrap sm:flex-nowrap items-center">
+                <h1 class="text-2xl font-bold text-white sm:flex-1">Dashboard</h1>
+                <div class="flex flex-wrap sm:flex-nowrap">
+                    <span class="nav-item" id="profile">User Profile</span>
+                    <span class="nav-item" id="messages">Messages</span>
+                    <span class="nav-item" id="status">Status</span>
+                    <span class="nav-item" id="settings">Settings</span>
+                    <span class="nav-item" id="logout-btn">Log Out</span>
+                </div>
             </div>
         </div>
 
@@ -90,6 +110,16 @@
     </div>
 
     <script>
+        // Check if the user is authenticated
+        function checkAuthentication() {
+            const authenticated = localStorage.getItem('authenticated');
+            if (authenticated !== 'true') {
+                window.location.href = 'login.html';
+            }
+        }
+
+        checkAuthentication();
+
         document.getElementById('settings').addEventListener('click', () => {
             const settingsSection = document.getElementById('settings-section');
             settingsSection.style.display = settingsSection.style.display === 'block' ? 'none' : 'block';
@@ -99,6 +129,12 @@
             localStorage.removeItem('user');
             localStorage.removeItem('authenticated');
             window.location.href = 'login.html';
+        });
+
+        // Toggle navbar visibility on small screens
+        document.getElementById('navbar-toggle').addEventListener('click', () => {
+            const navbarContent = document.querySelector('.navbar-content');
+            navbarContent.classList.toggle('show');
         });
     </script>
 </body>
