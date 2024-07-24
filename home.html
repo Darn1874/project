@@ -17,6 +17,8 @@
             align-items: center;
             justify-content: flex-start;
             padding-top: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
         }
         .navbar {
             display: flex;
@@ -29,13 +31,20 @@
             border-radius: 8px;
         }
         .nav-item {
-            margin-left: 20px;
+            margin-left: 10px;
             color: white;
             cursor: pointer;
+        }
+        .nav-item + .nav-item {
+            margin-left: 20px; /* Ensure spacing between nav items */
         }
         .content {
             margin-top: 20px;
             color: white;
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
         }
         .settings-section {
             display: none;
@@ -52,7 +61,7 @@
     <div class="container">
         <div class="navbar">
             <h1 class="text-2xl font-bold text-white">Dashboard</h1>
-            <div>
+            <div class="flex">
                 <span class="nav-item" id="profile">User Profile</span>
                 <span class="nav-item" id="messages">Messages</span>
                 <span class="nav-item" id="status">Status</span>
@@ -74,8 +83,11 @@
     </div>
 
     <script>
-        // Check authentication status
-        if (localStorage.getItem('authenticated') !== 'true') {
+        // Check if the user is authenticated
+        const authenticated = localStorage.getItem('authenticated');
+
+        // If not authenticated, redirect to login page
+        if (authenticated !== 'true') {
             window.location.href = 'login.html';
         }
 
@@ -86,14 +98,10 @@
             window.location.href = 'login.html';
         });
 
-        // Toggle settings section
+        // Toggle settings section visibility
         document.getElementById('settings').addEventListener('click', () => {
             const settingsSection = document.getElementById('settings-section');
-            if (settingsSection.style.display === 'none' || !settingsSection.style.display) {
-                settingsSection.style.display = 'block';
-            } else {
-                settingsSection.style.display = 'none';
-            }
+            settingsSection.style.display = settingsSection.style.display === 'none' || !settingsSection.style.display ? 'block' : 'none';
         });
     </script>
 </body>
