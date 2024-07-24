@@ -16,10 +16,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding-top: 20px;
+            padding: 20px;
         }
         .navbar {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
             width: 100%;
@@ -27,37 +28,131 @@
             padding: 10px 20px;
             background-color: #2d3748; /* Tailwind's gray-700 */
             border-radius: 8px;
+            margin-bottom: 20px;
+            position: relative;
         }
         .nav-item {
-            margin-left: 20px;
+            margin-left: 10px;
             color: white;
             cursor: pointer;
         }
-        .content {
-            margin-top: 20px;
-            color: white;
+        .nav-item + .nav-item {
+            margin-left: 20px; /* Ensure spacing between nav items */
         }
-        .settings-section {
+        .content {
+            color: white;
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+        .settings-section, .profile-section {
             display: none;
             background-color: #2d3748;
             border-radius: 8px;
             padding: 20px;
             margin-top: 20px;
             width: 100%;
-            max-width: 600px;
+            max-width: 800px;
+        }
+        .settings-section h2, .profile-section h2 {
+            font-size: 1.5rem;
+        }
+        .logo {
+            height: 40px; /* Adjust size as needed */
+        }
+        .navbar-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+            font-size: 1.5rem;
+        }
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+        }
+        @media (max-width: 640px) {
+            .navbar-toggle {
+                display: block;
+            }
+            .navbar-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+            .navbar-menu.show {
+                display: flex;
+            }
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .profile-header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .profile-header h1 {
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+        .post-form {
+            margin-top: 20px;
+        }
+        .post-form textarea, .post-form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #4a5568; /* Tailwind's gray-600 */
+        }
+        .post-form button {
+            background-color: #3182ce; /* Tailwind's blue-500 */
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .post-form button:hover {
+            background-color: #2b6cb0; /* Tailwind's blue-600 */
+        }
+        .post {
+            background-color: #2d3748;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .post img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .post p {
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="navbar">
-            <h1 class="text-2xl font-bold text-white">Dashboard</h1>
-            <div>
-                <span class="nav-item" id="profile">User Profile</span>
-                <span class="nav-item" id="messages">Messages</span>
-                <span class="nav-item" id="status">Status</span>
-                <span class="nav-item" id="settings">Settings</span>
-                <span class="nav-item" id="logout-btn">Log Out</span>
+            <!-- Logo visible on small screens only -->
+            <img src="https://example.com/logo.png" alt="Logo" class="logo block sm:hidden">
+
+            <span class="navbar-toggle" id="navbar-toggle">&#9776;</span>
+
+            <div class="navbar-menu">
+                <h1 class="text-2xl font-bold text-white sm:flex-1">Dashboard</h1>
+                <div class="flex flex-wrap sm:flex-nowrap">
+                    <span class="nav-item" id="profile">User Profile</span>
+                    <span class="nav-item" id="messages">Messages</span>
+                    <span class="nav-item" id="status">Status</span>
+                    <span class="nav-item" id="settings">Settings</span>
+                    <span class="nav-item" id="logout-btn">Log Out</span>
+                </div>
             </div>
         </div>
 
@@ -66,34 +161,147 @@
             <p>You are successfully logged in!</p>
         </div>
 
+        <!-- Profile Section -->
+        <div class="profile-section" id="profile-section">
+            <div class="profile-header">
+                <img src="https://via.placeholder.com/120" alt="Profile Photo" id="profile-photo">
+                <h1 id="username">Username</h1>
+            </div>
+            <div class="post-form">
+                <h2 class="text-lg font-bold text-white mb-4">Create a Post</h2>
+                <form id="post-form">
+                    <textarea id="post-text" rows="4" placeholder="What's on your mind?" class="resize-none"></textarea>
+                    <input type="file" id="post-image">
+                    <button type="submit">Post</button>
+                </form>
+            </div>
+            <div id="posts-container">
+                <!-- Posts will be dynamically added here -->
+            </div>
+        </div>
+
+        <!-- Settings Section -->
         <div class="settings-section" id="settings-section">
-            <h2 class="text-xl font-bold mb-4">Settings</h2>
-            <p>Here you can adjust your preferences and account settings.</p>
-            <!-- Add more settings options as needed -->
+            <h2 class="text-xl font-bold mb-4">Account Settings</h2>
+            <!-- Profile Settings -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-8 mb-4">
+                <h3 class="text-lg font-bold text-white mb-4">Profile Settings</h3>
+                <form id="profile-settings-form">
+                    <div>
+                        <label for="profile-photo" class="block text-white">Profile Photo:</label>
+                        <input type="file" id="profile-photo-input" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white">
+                    </div>
+                    <div class="mt-4">
+                        <label for="profile-name" class="block text-white">Display Name:</label>
+                        <input type="text" id="profile-name" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white" placeholder="Enter new display name">
+                    </div>
+                    <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4 w-full">Save Changes</button>
+                </form>
+            </div>
+
+            <!-- Change Password -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-8 mb-4">
+                <h3 class="text-lg font-bold text-white mb-4">Change Password</h3>
+                <form id="change-password-form">
+                    <div>
+                        <label for="current-password" class="block text-white">Current Password:</label>
+                        <input type="password" id="current-password" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white" placeholder="Enter current password">
+                    </div>
+                    <div class="mt-4">
+                        <label for="new-password" class="block text-white">New Password:</label>
+                        <input type="password" id="new-password" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white" placeholder="Enter new password">
+                    </div>
+                    <div class="mt-4">
+                        <label for="confirm-password" class="block text-white">Confirm New Password:</label>
+                        <input type="password" id="confirm-password" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white" placeholder="Confirm new password">
+                    </div>
+                    <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4 w-full">Change Password</button>
+                </form>
+            </div>
+
+            <!-- Edit Name -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-8 mb-4">
+                <h3 class="text-lg font-bold text-white mb-4">Edit Name</h3>
+                <form id="edit-name-form">
+                    <div>
+                        <label for="edit-name" class="block text-white">New Name:</label>
+                        <input type="text" id="edit-name" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white" placeholder="Enter your new name">
+                    </div>
+                    <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4 w-full">Update Name</button>
+                </form>
+            </div>
         </div>
     </div>
 
     <script>
-        // Check authentication status
-        if (localStorage.getItem('authenticated') !== 'true') {
-            window.location.href = 'login.html';
-        }
-
-        // Logout functionality
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            localStorage.removeItem('user');
-            localStorage.removeItem('authenticated');
-            window.location.href = 'login.html';
-        });
-
-        // Toggle settings section
-        document.getElementById('settings').addEventListener('click', () => {
-            const settingsSection = document.getElementById('settings-section');
-            if (settingsSection.style.display === 'none' || !settingsSection.style.display) {
-                settingsSection.style.display = 'block';
-            } else {
-                settingsSection.style.display = 'none';
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if the user is authenticated
+            function checkAuthentication() {
+                const authenticated = localStorage.getItem('authenticated');
+                if (authenticated !== 'true') {
+                    window.location.href = 'login.html';
+                }
             }
+
+            checkAuthentication();
+
+            // Handle settings click
+            document.getElementById('settings').addEventListener('click', () => {
+                const settingsSection = document.getElementById('settings-section');
+                settingsSection.style.display = settingsSection.style.display === 'block' ? 'none' : 'block';
+                document.getElementById('profile-section').style.display = 'none';
+            });
+
+            // Handle profile click
+            document.getElementById('profile').addEventListener('click', () => {
+                const profileSection = document.getElementById('profile-section');
+                profileSection.style.display = profileSection.style.display === 'block' ? 'none' : 'block';
+                document.getElementById('settings-section').style.display = 'none';
+            });
+
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                localStorage.removeItem('user');
+                localStorage.removeItem('authenticated');
+                window.location.href = 'login.html';
+            });
+
+            // Toggle navbar visibility on small screens
+            document.getElementById('navbar-toggle').addEventListener('click', () => {
+                const navbarMenu = document.querySelector('.navbar-menu');
+                navbarMenu.classList.toggle('show');
+            });
+
+            // Handle post form submission
+            document.getElementById('post-form').addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const text = document.getElementById('post-text').value;
+                const image = document.getElementById('post-image').files[0];
+
+                if (text || image) {
+                    const postsContainer = document.getElementById('posts-container');
+                    const postDiv = document.createElement('div');
+                    postDiv.classList.add('post');
+
+                    if (image) {
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(image);
+                        postDiv.appendChild(img);
+                    }
+
+                    if (text) {
+                        const p = document.createElement('p');
+                        p.textContent = text;
+                        postDiv.appendChild(p);
+                    }
+
+                    postsContainer.appendChild(postDiv);
+
+                    // Clear form
+                    document.getElementById('post-text').value = '';
+                    document.getElementById('post-image').value = '';
+                }
+            });
         });
     </script>
 </body>
