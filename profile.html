@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a202c; /* Tailwind's gray-800 */
+            margin: 0;
+        }
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .profile-header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .posts {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+        .post {
+            background-color: #2d3748;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            color: white;
+        }
+        .post img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <img src="profile-photo.jpg" alt="Profile Photo" id="profile-photo">
+            <h1 id="username" class="text-2xl font-bold">Username</h1>
+        </div>
+
+        <!-- Post Form -->
+        <div class="bg-gray-800 rounded-lg shadow-lg p-8 max-w-sm w-full">
+            <h2 class="text-xl font-bold mb-4 text-white text-center">Post a Photo or Text</h2>
+            <form id="post-form" class="space-y-4">
+                <div>
+                    <label for="post-text" class="block text-white">Text Post:</label>
+                    <textarea id="post-text" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white" placeholder="What's on your mind?" rows="4"></textarea>
+                </div>
+                <div>
+                    <label for="post-photo" class="block text-white">Upload Photo:</label>
+                    <input type="file" id="post-photo" accept="image/*" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white">
+                </div>
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 w-full">Post</button>
+            </form>
+        </div>
+
+        <!-- Posts Section -->
+        <div id="posts" class="posts">
+            <!-- Posts will be appended here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if the user is authenticated
+            function checkAuthentication() {
+                const authenticated = localStorage.getItem('authenticated');
+                if (authenticated !== 'true') {
+                    window.location.href = 'login.html';
+                }
+            }
+
+            checkAuthentication();
+
+            // Set profile data (example)
+            const username = localStorage.getItem('username') || 'Username';
+            const profilePhoto = localStorage.getItem('profilePhoto') || 'profile-photo.jpg';
+
+            document.getElementById('username').textContent = username;
+            document.getElementById('profile-photo').src = profilePhoto;
+
+            // Handle form submission
+            document.getElementById('post-form').addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent form submission
+                
+                const textPost = document.getElementById('post-text').value;
+                const photoFile = document.getElementById('post-photo').files[0];
+                const postsContainer = document.getElementById('posts');
+
+                if (textPost || photoFile) {
+                    const postDiv = document.createElement('div');
+                    postDiv.classList.add('post');
+
+                    if (textPost) {
+                        const textElement = document.createElement('p');
+                        textElement.textContent = textPost;
+                        postDiv.appendChild(textElement);
+                    }
+
+                    if (photoFile) {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                            const imgElement = document.createElement('img');
+                            imgElement.src = reader.result;
+                            postDiv.appendChild(imgElement);
+                        };
+                        reader.readAsDataURL(photoFile);
+                    }
+
+                    postsContainer.prepend(postDiv); // Add new post at the top
+                    document.getElementById('post-form').reset();
+                } else {
+                    alert('Please provide text or upload a photo.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
