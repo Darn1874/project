@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a202c; /* Tailwind's gray-800 */
+            margin: 0;
+        }
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 20px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 10px 20px;
+            background-color: #2d3748; /* Tailwind's gray-700 */
+            border-radius: 8px;
+        }
+        .nav-item {
+            margin-left: 20px;
+            color: white;
+            cursor: pointer;
+        }
+        .content {
+            margin-top: 20px;
+            color: white;
+        }
+        .settings-section {
+            display: none;
+            background-color: #2d3748;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <h1 class="text-2xl font-bold text-white">Dashboard</h1>
+            <div>
+                <span class="nav-item" id="profile">User Profile</span>
+                <span class="nav-item" id="messages">Messages</span>
+                <span class="nav-item" id="status">Status</span>
+                <span class="nav-item" id="settings">Settings</span>
+                <span class="nav-item" id="logout-btn">Log Out</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2 class="text-xl font-bold">Welcome to the Home Page</h2>
+            <p>You are successfully logged in!</p>
+        </div>
+
+        <div class="settings-section" id="settings-section">
+            <h2 class="text-xl font-bold mb-4">Settings</h2>
+            <p>Here you can adjust your preferences and account settings.</p>
+            <!-- Add more settings options as needed -->
+        </div>
+    </div>
+
+    <script>
+        // Check authentication status
+        if (localStorage.getItem('authenticated') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('user');
+            localStorage.removeItem('authenticated');
+            window.location.href = 'login.html';
+        });
+
+        // Toggle settings section
+        document.getElementById('settings').addEventListener('click', () => {
+            const settingsSection = document.getElementById('settings-section');
+            if (settingsSection.style.display === 'none' || !settingsSection.style.display) {
+                settingsSection.style.display = 'block';
+            } else {
+                settingsSection.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
