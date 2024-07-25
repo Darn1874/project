@@ -17,8 +17,7 @@
             color: white;
             padding: 10px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
             position: fixed;
             top: 0;
             width: 100%;
@@ -28,26 +27,33 @@
             height: 40px;
         }
         .navbar-search {
-            flex: 1;
-            margin: 0 20px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
         }
         .navbar-search input {
-            width: 100%;
+            width: 80%;
             padding: 8px;
             border-radius: 20px;
             border: none;
             outline: none;
         }
+        .navbar-icons {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
         .navbar-icons img {
             height: 24px;
             width: 24px;
-            margin: 0 10px;
+            margin: 5px;
         }
         .sidebar {
             background-color: white;
             width: 250px;
             position: fixed;
-            top: 60px;
+            top: 70px;
             bottom: 0;
             left: 0;
             padding: 20px;
@@ -87,7 +93,7 @@
         .main-content {
             margin-left: 270px;
             padding: 20px;
-            margin-top: 70px;
+            margin-top: 90px; /* Adjusted to account for navbar height */
             width: calc(100% - 270px);
             transition: margin-left 0.3s;
         }
