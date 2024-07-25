@@ -130,14 +130,21 @@
             border-radius: 8px;
             border: 1px solid #ddd;
         }
-        .post-form button {
+        .post-form-buttons {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .post-form-buttons button {
             background-color: #4267b2;
             color: white;
             padding: 10px;
             border-radius: 8px;
             cursor: pointer;
+            border: none;
+            margin-right: 5px;
         }
-        .post-form button:hover {
+        .post-form-buttons button:hover {
             background-color: #365899;
         }
         .post {
@@ -150,6 +157,19 @@
         .post img {
             width: 100%;
             border-radius: 8px;
+        }
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .post-actions button {
+            background: none;
+            border: none;
+            color: #4267b2;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
         }
         .profile-header {
             background-color: white;
@@ -270,8 +290,6 @@
         </div>
     </div>
 
-  
-
     <!-- Main Content -->
     <div class="main-content" id="main-content">
         <!-- User Profile Button -->
@@ -314,10 +332,20 @@
         <div class="post">
             <img src="https://via.placeholder.com/600x200" alt="Post Image">
             <p>Post content goes here...</p>
+            <div class="post-actions">
+                <button onclick="likePost(this)">Like</button>
+                <button onclick="commentOnPost(this)">Comment</button>
+                <button onclick="sharePost(this)">Share</button>
+            </div>
         </div>
         <div class="post">
             <img src="https://via.placeholder.com/600x200" alt="Post Image">
             <p>Another post content...</p>
+            <div class="post-actions">
+                <button onclick="likePost(this)">Like</button>
+                <button onclick="commentOnPost(this)">Comment</button>
+                <button onclick="sharePost(this)">Share</button>
+            </div>
         </div>
     </div>
 
@@ -372,6 +400,29 @@
         // Function to post status
         function postStatus() {
             alert('Status posted');
+        }
+
+        // Function to like a post
+        function likePost(button) {
+            var isLiked = button.classList.toggle('liked');
+            button.textContent = isLiked ? 'Liked' : 'Like';
+        }
+
+        // Function to comment on a post
+        function commentOnPost(button) {
+            var postContent = button.closest('.post');
+            var comment = prompt('Enter your comment:');
+            if (comment) {
+                var commentSection = document.createElement('div');
+                commentSection.className = 'comment';
+                commentSection.textContent = comment;
+                postContent.appendChild(commentSection);
+            }
+        }
+
+        // Function to share a post
+        function sharePost(button) {
+            alert('Share feature not implemented');
         }
     </script>
 </body>
