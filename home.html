@@ -48,28 +48,7 @@
             height: 24px;
             width: 24px;
             margin: 5px;
-        }
-        .profile-dropdown {
-            position: absolute;
-            top: 60px;
-            right: 10px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            display: none;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 10px;
-            width: 200px;
-        }
-        .profile-dropdown a {
-            color: black;
-            padding: 5px 0;
-            text-decoration: none;
-            width: 100%;
-        }
-        .profile-dropdown a:hover {
-            background-color: #f0f2f5;
+            cursor: pointer;
         }
         .profile-button img {
             height: 40px;
@@ -177,6 +156,8 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
         }
         .profile-header img {
             width: 120px;
@@ -281,15 +262,36 @@
             </div>
         </div>
         <div class="navbar-icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Home_Icon.svg/1024px-Home_Icon.svg.png" alt="Home Icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Home_Icon.svg/1024px-Home_Icon.svg.png" alt="Home Icon" onclick="window.location.href='homepage.html'">
             <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Friends.png" alt="Friends Icon">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Notifications_Icon.svg/1024px-Notifications_Icon.svg.png" alt="Notifications Icon">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Message_Icon.svg/1200px-Message_Icon.svg.png" alt="Messages Icon">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Profile_Icon.svg/1024px-Profile_Icon.svg.png" alt="Profile Icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Profile_Icon.svg/1024px-Profile_Icon.svg.png" alt="Profile Icon" onclick="window.location.href='profile.html'">
         </div>
     </div>
 
-   
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="nav-item hidden-on-small">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Friends.png" alt="Friends Icon"> <span>Friends</span>
+        </div>
+        <div class="nav-item hidden-on-small">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Group_Icon.png" alt="Groups Icon"> <span>Groups</span>
+        </div>
+        <div class="nav-item hidden-on-small">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Page_Icon.png" alt="Pages Icon"> <span>Pages</span>
+        </div>
+        <div class="nav-item hidden-on-small">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Marketplace_Icon.png" alt="Marketplace Icon"> <span>Marketplace</span>
+        </div>
+        <div class="nav-item hidden-on-small">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Settings_Icon.png" alt="Settings Icon"> <span>Settings</span>
+        </div>
+        <div class="nav-item hidden-on-small">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Help_Icon.png" alt="Help Icon"> <span>Help & Support</span>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <div class="main-content" id="main-content">
         <!-- User Profile Button -->
@@ -319,7 +321,13 @@
         <!-- Post Form -->
         <div class="post-form">
             <textarea placeholder="What's on your mind?"></textarea>
-            <button>Post</button>
+            <div class="post-form-buttons">
+                <button onclick="showEmojiPicker()">😊</button>
+                <button onclick="showMediaPicker()">📷</button>
+                <button onclick="showMusicPicker()">🎵</button>
+                <button onclick="showVideoPicker()">🎥</button>
+                <button onclick="postStatus()">Post</button>
+            </div>
         </div>
 
         <!-- Posts -->
@@ -360,6 +368,31 @@
                 document.querySelector('.profile-dropdown').style.display = 'none';
             }
         });
+
+        // Function to show emoji picker
+        function showEmojiPicker() {
+            alert('Emoji Picker not implemented');
+        }
+
+        // Function to show media picker
+        function showMediaPicker() {
+            alert('Media Picker not implemented');
+        }
+
+        // Function to show music picker
+        function showMusicPicker() {
+            alert('Music Picker not implemented');
+        }
+
+        // Function to show video picker
+        function showVideoPicker() {
+            alert('Video Picker not implemented');
+        }
+
+        // Function to post status
+        function postStatus() {
+            alert('Status posted');
+        }
     </script>
 </body>
 </html>
