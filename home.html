@@ -51,19 +51,35 @@
             left: 0;
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: width 0.3s;
+        }
+        .sidebar.collapsed {
+            width: 60px;
         }
         .sidebar .nav-item {
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            transition: opacity 0.3s;
         }
-        .sidebar img {
+        .sidebar .nav-item img {
             height: 24px;
             width: 24px;
+            margin-right: 10px;
+        }
+        .sidebar.collapsed .nav-item span {
+            display: none;
         }
         .main-content {
             margin-left: 270px;
             padding: 20px;
             margin-top: 70px;
             width: calc(100% - 270px);
+            transition: margin-left 0.3s;
+        }
+        .main-content.sidebar-collapsed {
+            margin-left: 70px;
+            width: calc(100% - 70px);
         }
         .post-form {
             background-color: white;
@@ -178,32 +194,32 @@
     </div>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Home Icon"> Home
+            <img src="https://via.placeholder.com/24" alt="Home Icon"> <span>Home</span>
         </div>
         <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Friends Icon"> Friends
+            <img src="https://via.placeholder.com/24" alt="Friends Icon"> <span>Friends</span>
         </div>
         <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Groups Icon"> Groups
+            <img src="https://via.placeholder.com/24" alt="Groups Icon"> <span>Groups</span>
         </div>
         <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Pages Icon"> Pages
+            <img src="https://via.placeholder.com/24" alt="Pages Icon"> <span>Pages</span>
         </div>
         <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Marketplace Icon"> Marketplace
+            <img src="https://via.placeholder.com/24" alt="Marketplace Icon"> <span>Marketplace</span>
         </div>
         <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Watch Icon"> Watch
+            <img src="https://via.placeholder.com/24" alt="Watch Icon"> <span>Watch</span>
         </div>
         <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Memories Icon"> Memories
+            <img src="https://via.placeholder.com/24" alt="Memories Icon"> <span>Memories</span>
         </div>
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="main-content">
         <!-- Profile Header -->
         <div class="profile-header">
             <div style="display: flex; align-items: center;">
@@ -235,27 +251,68 @@
         <!-- Posts -->
         <div class="post">
             <div style="display: flex; align-items: center;">
-                <img src="https://via.placeholder.com/50" alt="Profile Photo">
+                <img src="https://via.placeholder.com/120" alt="Profile Photo">
                 <div>
-                    <h3>Username</h3>
-                    <p>Location</p>
+                    <h1>Username</h1>
+                    <p>Sample post content goes here. This is a placeholder for a post.</p>
                 </div>
             </div>
-            <p>Sample post content...</p>
-            <img src="https://via.placeholder.com/600x400" alt="Post Image">
         </div>
     </div>
 
+    <!-- Settings Dropdown -->
+    <div class="settings-dropdown" id="settings-dropdown">
+        <a href="#">Settings</a>
+        <a href="#">Orders and Payments</a>
+        <a href="#">Dark Mode</a>
+        <a href="#">Language</a>
+        <a href="#">Data Saver</a>
+        <a href="#">Clear Space</a>
+        <a href="#">Early Access</a>
+    </div>
+
+    <!-- Help and Support Dropdown -->
+    <div class="help-support-dropdown" id="help-support-dropdown">
+        <a href="#">Help</a>
+        <a href="#">Creator Support</a>
+        <a href="#">Support Inbox</a>
+        <a href="#">About</a>
+        <a href="#">Report Spam</a>
+        <a href="#">Log Out</a>
+    </div>
+
     <script>
-        // JavaScript to handle menu and section toggling
-        document.getElementById('menu-button').addEventListener('click', function() {
-            var menuDropdown = document.querySelector('.settings-dropdown');
-            menuDropdown.classList.toggle('show');
+        document.getElementById('home').addEventListener('click', function() {
+            // Handle home button click
         });
+
+        document.getElementById('friends').addEventListener('click', function() {
+            // Handle friends button click
+        });
+
+        document.getElementById('messages').addEventListener('click', function() {
+            // Handle messages button click
+        });
+
+        document.getElementById('notifications').addEventListener('click', function() {
+            // Handle notifications button click
+        });
+
+        document.getElementById('profile').addEventListener('click', function() {
+            // Handle profile button click
+        });
+
+        document.querySelector('.sidebar .nav-item').addEventListener('click', function() {
+            var sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+            document.getElementById('main-content').classList.toggle('sidebar-collapsed');
+        });
+
         document.getElementById('settings').addEventListener('click', function() {
             var settingsDropdown = document.querySelector('.settings-dropdown');
             settingsDropdown.classList.toggle('show');
         });
+
         document.getElementById('help-support').addEventListener('click', function() {
             var helpSupportDropdown = document.querySelector('.help-support-dropdown');
             helpSupportDropdown.classList.toggle('show');
