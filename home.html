@@ -9,6 +9,7 @@
         body {
             background-color: #f0f2f5;
             margin: 0;
+            font-family: Arial, sans-serif;
         }
         .container {
             min-height: 100vh;
@@ -19,8 +20,7 @@
         }
         .navbar {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
             width: 100%;
             max-width: 1200px;
@@ -32,6 +32,7 @@
         }
         .logo {
             height: 40px;
+            margin-bottom: 10px;
         }
         .navbar-toggle {
             display: none;
@@ -41,11 +42,11 @@
         }
         .navbar-menu {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            flex-wrap: wrap;
         }
         .nav-item {
-            margin-left: 10px;
+            margin: 10px 0;
             color: white;
             cursor: pointer;
             display: flex;
@@ -55,9 +56,6 @@
             height: 24px;
             width: 24px;
             margin-right: 8px;
-        }
-        .nav-item + .nav-item {
-            margin-left: 20px;
         }
         .status-display {
             display: flex;
@@ -84,8 +82,8 @@
         }
         .homepage-buttons {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             gap: 10px;
             margin-bottom: 20px;
             width: 100%;
@@ -98,17 +96,30 @@
             border-radius: 8px;
             cursor: pointer;
             text-align: center;
-            width: 150px;
+            width: 200px;
             font-size: 1rem;
             text-decoration: none;
         }
         .homepage-button:hover {
             background-color: #165eab;
         }
-        .profile-header, .status-form, .post-form, .messages-section, .settings-section {
-            display: none;
+        .update-status-button {
+            background-color: #00a400;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            width: 200px;
+            font-size: 1rem;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+        .update-status-button:hover {
+            background-color: #007700;
         }
         .profile-header, .status-form, .post-form, .messages-section, .settings-section {
+            display: none;
             width: 100%;
             max-width: 1200px;
             background-color: #ffffff;
@@ -254,11 +265,11 @@
     <div class="container">
         <!-- Navbar -->
         <div class="navbar">
-            <img src="https://via.placeholder.com/100x40" alt="Logo" class="logo block sm:hidden">
+            <img src="https://via.placeholder.com/100x40" alt="Logo" class="logo">
             <span class="navbar-toggle" id="navbar-toggle">&#9776;</span>
             <div class="navbar-menu">
-                <h1 class="text-2xl font-bold text-white sm:flex-1">Dashboard</h1>
-                <div class="flex flex-wrap sm:flex-nowrap">
+                <h1 class="text-2xl font-bold text-white">Dashboard</h1>
+                <div class="flex flex-col items-center">
                     <div class="nav-item" id="home">
                         <img src="https://via.placeholder.com/24" alt="Home Icon"> Home
                     </div>
@@ -313,6 +324,9 @@
             <a href="#" class="homepage-button">Pages</a>
             <a href="#" class="homepage-button">Memories</a>
         </div>
+
+        <!-- Update Status Button -->
+        <a href="#" class="update-status-button">Update Status</a>
 
         <!-- Profile Header -->
         <div class="profile-header" id="profile-section">
