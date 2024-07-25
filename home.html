@@ -40,14 +40,42 @@
         }
         .navbar-icons {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            padding: 0 10px;
         }
         .navbar-icons img {
             height: 24px;
             width: 24px;
             margin: 5px;
+        }
+        .profile-dropdown {
+            position: absolute;
+            top: 60px;
+            right: 10px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+            width: 200px;
+        }
+        .profile-dropdown a {
+            color: black;
+            padding: 5px 0;
+            text-decoration: none;
+            width: 100%;
+        }
+        .profile-dropdown a:hover {
+            background-color: #f0f2f5;
+        }
+        .profile-button img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            cursor: pointer;
         }
         .sidebar {
             background-color: white;
@@ -243,35 +271,34 @@
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <img src="https://via.placeholder.com/100x40" alt="Logo" class="navbar-logo">
-        <div class="navbar-search">
-            <input type="text" placeholder="Search...">
+        <div class="navbar-icons">
+            <img src="https://via.placeholder.com/100x40" alt="Logo" class="navbar-logo">
+            <div class="navbar-search">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="profile-button" id="profile-button">
+                <img src="https://via.placeholder.com/40" alt="Profile Photo">
+            </div>
         </div>
         <div class="navbar-icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Home_Icon.svg/1024px-Home_Icon.svg.png" alt="Home Icon" id="home">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Friends.png" alt="Friends Icon" id="friends">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Message_Icon_%28iOS%29.svg/1024px-Message_Icon_%28iOS%29.svg.png" alt="Messages Icon" id="messages">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Notification_Icon.png" alt="Notifications Icon" id="notifications">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Profile_Icon.png" alt="Profile Icon" id="profile">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Home_Icon.svg/1024px-Home_Icon.svg.png" alt="Home Icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Friends.png" alt="Friends Icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Notifications_Icon.svg/1024px-Notifications_Icon.svg.png" alt="Notifications Icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Message_Icon.svg/1200px-Message_Icon.svg.png" alt="Messages Icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Profile_Icon.svg/1024px-Profile_Icon.svg.png" alt="Profile Icon">
         </div>
     </div>
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        <div class="toggle-friends" id="toggle-friends">
-            <span>Friends</span>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Circle-icons-expand.svg/1024px-Circle-icons-expand.svg.png" alt="Toggle Icon">
+        <div class="nav-item hidden-on-small">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Friends.png" alt="Friends Icon"> <span>Friends</span>
         </div>
-        <div class="toggle-friends-content">
-            <div class="nav-item hidden-on-small">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Friends.png" alt="Friends Icon"> <span>Friends</span>
-            </div>
-            <div class="nav-item hidden-on-small">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Group_Icon.png" alt="Groups Icon"> <span>Groups</span>
-            </div>
-            <div class="nav-item hidden-on-small">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Page_Icon.png" alt="Pages Icon"> <span>Pages</span>
-            </div>
+        <div class="nav-item hidden-on-small">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Group_Icon.png" alt="Groups Icon"> <span>Groups</span>
+        </div>
+        <div class="nav-item hidden-on-small">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Page_Icon.png" alt="Pages Icon"> <span>Pages</span>
         </div>
         <div class="nav-item">
             <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Marketplace_Icon.png" alt="Marketplace Icon"> <span>Marketplace</span>
@@ -282,15 +309,55 @@
         <div class="nav-item">
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Help_Icon.png" alt="Help Icon"> <span>Help & Support</span>
         </div>
+        <div class="nav-item toggle-friends" id="toggle-friends">
+            <span>Toggle</span> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Profile_Icon.svg/1024px-Profile_Icon.svg.png" alt="Toggle Icon">
+        </div>
+        <div class="toggle-friends-content">
+            <div class="nav-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Friends.png" alt="Friends Icon"> <span>Friends</span>
+            </div>
+            <div class="nav-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Group_Icon.png" alt="Groups Icon"> <span>Groups</span>
+            </div>
+            <div class="nav-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Page_Icon.png" alt="Pages Icon"> <span>Pages</span>
+            </div>
+        </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content" id="main-content">
-        <!-- Your main content here -->
+        <!-- User Profile Button -->
+        <div class="profile-header">
+            <div class="profile-info">
+                <img src="https://via.placeholder.com/120" alt="User Profile Photo">
+                <div>
+                    <h1>User Name</h1>
+                    <h2>@username</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Display -->
+        <div class="status-display">
+            <div class="status-item">
+                <p>What's on your mind?</p>
+            </div>
+            <div class="status-item">
+                <p>Status update here...</p>
+            </div>
+            <div class="status-item">
+                <p>Another status...</p>
+            </div>
+        </div>
+
+        <!-- Post Form -->
         <div class="post-form">
             <textarea placeholder="What's on your mind?"></textarea>
             <button>Post</button>
         </div>
+
+        <!-- Posts -->
         <div class="post">
             <img src="https://via.placeholder.com/600x200" alt="Post Image">
             <p>Post content goes here...</p>
@@ -302,17 +369,7 @@
     </div>
 
     <script>
-        document.getElementById('toggle-friends').addEventListener('click', function() {
-            this.classList.toggle('collapsed');
-            var content = document.querySelector('.toggle-friends-content');
-            if (content.style.display === "none" || content.style.display === "") {
-                content.style.display = "block";
-            } else {
-                content.style.display = "none";
-            }
-        });
-
-        // Function to handle sidebar collapse
+        // Toggle Sidebar
         function toggleSidebar() {
             var sidebar = document.getElementById('sidebar');
             var mainContent = document.getElementById('main-content');
@@ -320,8 +377,24 @@
             mainContent.classList.toggle('sidebar-collapsed');
         }
 
-        // Add event listener for toggling sidebar
-        document.querySelector('.navbar-logo').addEventListener('click', toggleSidebar);
+        // Toggle Profile Dropdown
+        document.getElementById('profile-button').addEventListener('click', function() {
+            var dropdown = document.querySelector('.profile-dropdown');
+            dropdown.style.display = dropdown.style.display === 'none' || dropdown.style.display === '' ? 'block' : 'none';
+        });
+
+        // Toggle Friends Section
+        document.getElementById('toggle-friends').addEventListener('click', function() {
+            var content = document.querySelector('.toggle-friends-content');
+            content.style.display = content.style.display === 'none' || content.style.display === '' ? 'block' : 'none';
+        });
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(e) {
+            if (!document.getElementById('profile-button').contains(e.target)) {
+                document.querySelector('.profile-dropdown').style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
