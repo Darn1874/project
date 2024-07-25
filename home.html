@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {
@@ -90,13 +90,6 @@
         .profile-info h2 {
             font-size: 1.25rem;
             color: #606770;
-        }
-        .status-form, .post-form, .message-form {
-            margin-bottom: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         .status-form textarea, .post-form textarea, .message-form textarea, .status-form input[type="file"], .post-form input[type="file"] {
             width: 100%;
@@ -238,11 +231,6 @@
             </form>
         </div>
 
-        <!-- Status Container -->
-        <div id="status-container">
-            <!-- Statuses will be dynamically added here -->
-        </div>
-
         <!-- Post Form -->
         <div class="post-form" id="post-section">
             <h2 class="text-lg font-bold mb-4">Create a Post</h2>
@@ -251,11 +239,6 @@
                 <input type="file" id="post-image">
                 <button type="submit">Post</button>
             </form>
-        </div>
-
-        <!-- Post Container -->
-        <div id="post-container">
-            <!-- Posts will be dynamically added here -->
         </div>
 
         <!-- Messages Section -->
@@ -293,7 +276,8 @@
             'profile': document.getElementById('profile-section'),
             'messages': document.getElementById('messages-section'),
             'status': document.getElementById('status-section'),
-            'settings': document.getElementById('settings-section')
+            'settings': document.getElementById('settings-section'),
+            'post': document.getElementById('post-section')
         };
 
         document.getElementById('profile').addEventListener('click', function() {
