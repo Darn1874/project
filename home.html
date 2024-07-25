@@ -9,6 +9,8 @@
         body {
             background-color: #f0f2f5;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
         .navbar {
             background-color: #4267b2;
@@ -26,9 +28,8 @@
             height: 40px;
         }
         .navbar-search {
-            width: 50%;
-            display: flex;
-            align-items: center;
+            flex: 1;
+            margin: 0 20px;
         }
         .navbar-search input {
             width: 100%;
@@ -69,6 +70,19 @@
         }
         .sidebar.collapsed .nav-item span {
             display: none;
+        }
+        .sidebar .hide-friends {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f0f2f5;
+            border-radius: 8px;
+        }
+        .hide-friends img {
+            height: 24px;
+            width: 24px;
         }
         .main-content {
             margin-left: 270px;
@@ -175,6 +189,29 @@
         .settings-dropdown a:hover, .help-support-dropdown a:hover {
             background-color: #f0f2f5;
         }
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar-search input {
+                width: 80%;
+            }
+            .sidebar {
+                width: 200px;
+            }
+            .sidebar.collapsed {
+                width: 60px;
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            .main-content.sidebar-collapsed {
+                margin-left: 0;
+                width: 100%;
+            }
+            .hide-friends {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -195,6 +232,10 @@
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
+        <div class="hide-friends" id="hide-friends">
+            <span>Friends</span>
+            <img src="https://via.placeholder.com/24" alt="Hide Icon">
+        </div>
         <div class="nav-item">
             <img src="https://via.placeholder.com/24" alt="Home Icon"> <span>Home</span>
         </div>
@@ -222,30 +263,28 @@
     <div class="main-content" id="main-content">
         <!-- Profile Header -->
         <div class="profile-header">
-            <div style="display: flex; align-items: center;">
-                <img src="https://via.placeholder.com/120" alt="Profile Photo">
-                <div>
-                    <h1>Username</h1>
-                    <h2>Display Name</h2>
-                </div>
+            <img src="https://via.placeholder.com/120" alt="Profile Photo">
+            <div>
+                <h1>Username</h1>
+                <h2>Sample bio goes here.</h2>
             </div>
         </div>
 
         <!-- Status Display -->
         <div class="status-display">
-            <!-- Status items will be dynamically added here -->
             <div class="status-item">
-                <p>Sample Status Message</p>
+                <p>Status message 1</p>
             </div>
+            <div class="status-item">
+                <p>Status message 2</p>
+            </div>
+            <!-- Add more status items here -->
         </div>
 
         <!-- Post Form -->
         <div class="post-form">
-            <h2 class="text-lg font-bold mb-4">What's on your mind?</h2>
-            <form id="post-form">
-                <textarea id="post-text" rows="4" placeholder="Write something..." class="resize-none"></textarea>
-                <button type="submit">Post</button>
-            </form>
+            <textarea rows="3" placeholder="What's on your mind?"></textarea>
+            <button>Post</button>
         </div>
 
         <!-- Posts -->
@@ -306,6 +345,12 @@
             var sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('collapsed');
             document.getElementById('main-content').classList.toggle('sidebar-collapsed');
+        });
+
+        document.getElementById('hide-friends').addEventListener('click', function() {
+            var sidebar = document.getElementById('sidebar');
+            var friends = sidebar.querySelector('.nav-item:nth-child(2)');
+            friends.style.display = (friends.style.display === 'none') ? 'flex' : 'none';
         });
 
         document.getElementById('settings').addEventListener('click', function() {
