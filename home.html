@@ -249,7 +249,7 @@
             </div>
             <form id="message-form">
                 <textarea id="message-text" rows="2" placeholder="Type your message..." class="resize-none"></textarea>
-                <button type="submit">Send Message</button>
+                <button type="button" id="send-message-button">Send Message</button>
             </form>
         </div>
 
@@ -265,6 +265,36 @@
     </div>
 
     <script>
+        // JavaScript to handle message sending
+        document.getElementById('send-message-button').addEventListener('click', function() {
+            var messageText = document.getElementById('message-text').value;
+
+            if (messageText.trim() === '') {
+                alert('Please enter a message before sending.');
+                return;
+            }
+
+            var messageList = document.getElementById('message-list');
+
+            // Create a new message item
+            var newMessage = document.createElement('div');
+            newMessage.classList.add('message-item');
+
+            // Add the message text to the new message item
+            var messageContent = document.createElement('p');
+            messageContent.textContent = messageText;
+            newMessage.appendChild(messageContent);
+
+            // Append the new message item to the message list
+            messageList.appendChild(newMessage);
+
+            // Clear the textarea
+            document.getElementById('message-text').value = '';
+
+            // Scroll to the bottom of the message list
+            messageList.scrollTop = messageList.scrollHeight;
+        });
+
         // JavaScript to toggle the mobile menu
         document.getElementById('navbar-toggle').addEventListener('click', function() {
             var menu = document.querySelector('.navbar-menu');
