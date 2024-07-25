@@ -60,6 +60,7 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             transition: width 0.3s;
             overflow-y: auto;
+            z-index: 999;
         }
         .sidebar.collapsed {
             width: 60px;
@@ -78,8 +79,8 @@
         .sidebar.collapsed .nav-item span {
             display: none;
         }
-        .sidebar .hide-friends {
-            display: flex;
+        .sidebar .toggle-friends {
+            display: none;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
@@ -88,14 +89,14 @@
             border-radius: 8px;
             margin-bottom: 15px;
         }
-        .hide-friends img {
+        .toggle-friends img {
             height: 24px;
             width: 24px;
         }
-        .hide-friends-content {
+        .toggle-friends-content {
             display: block;
         }
-        .hide-friends.collapsed + .hide-friends-content {
+        .toggle-friends.collapsed + .toggle-friends-content {
             display: none;
         }
         .main-content {
@@ -209,7 +210,8 @@
                 width: 100%;
             }
             .sidebar {
-                width: 200px;
+                width: 60px;
+                overflow-y: visible;
             }
             .sidebar.collapsed {
                 width: 60px;
@@ -222,14 +224,18 @@
                 margin-left: 0;
                 width: 100%;
             }
-            .hide-friends {
+            .toggle-friends {
                 display: flex;
             }
-            .hide-friends-content {
+            .toggle-friends-content {
                 display: none;
             }
-            .hide-friends.collapsed + .hide-friends-content {
+            .toggle-friends.collapsed + .toggle-friends-content {
                 display: block;
+            }
+            /* Hide specific sections on small screens */
+            .sidebar .nav-item.hidden-on-small {
+                display: none;
             }
         }
     </style>
@@ -242,142 +248,80 @@
             <input type="text" placeholder="Search...">
         </div>
         <div class="navbar-icons">
-            <img src="<box-icon type='solid' name='home'></box-icon>" alt="Home Icon" id="home">
-            <img src="https://via.placeholder.com/24" alt="Friends Icon" id="friends">
-            <img src="https://via.placeholder.com/24" alt="Messages Icon" id="messages">
-            <img src="https://via.placeholder.com/24" alt="Notifications Icon" id="notifications">
-            <img src="https://via.placeholder.com/24" alt="Profile Icon" id="profile">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Home_Icon.svg/1024px-Home_Icon.svg.png" alt="Home Icon" id="home">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Friends.png" alt="Friends Icon" id="friends">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Message_Icon_%28iOS%29.svg/1024px-Message_Icon_%28iOS%29.svg.png" alt="Messages Icon" id="messages">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Notification_Icon.png" alt="Notifications Icon" id="notifications">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Profile_Icon.png" alt="Profile Icon" id="profile">
         </div>
     </div>
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        <div class="hide-friends" id="hide-friends">
+        <div class="toggle-friends" id="toggle-friends">
             <span>Friends</span>
-            <img src="https://via.placeholder.com/24" alt="Toggle Icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Circle-icons-expand.svg/1024px-Circle-icons-expand.svg.png" alt="Toggle Icon">
         </div>
-        <div class="hide-friends-content">
-            <div class="nav-item">
-                <img src="https://via.placeholder.com/24" alt="Home Icon"> <span>Home</span>
+        <div class="toggle-friends-content">
+            <div class="nav-item hidden-on-small">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Friends.png" alt="Friends Icon"> <span>Friends</span>
             </div>
-            <div class="nav-item">
-                <img src="https://via.placeholder.com/24" alt="Friends Icon"> <span>Friends</span>
+            <div class="nav-item hidden-on-small">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Group_Icon.png" alt="Groups Icon"> <span>Groups</span>
             </div>
-            <div class="nav-item">
-                <img src="https://via.placeholder.com/24" alt="Groups Icon"> <span>Groups</span>
-            </div>
-            <div class="nav-item">
-                <img src="https://via.placeholder.com/24" alt="Pages Icon"> <span>Pages</span>
-            </div>
-            <div class="nav-item">
-                <img src="https://via.placeholder.com/24" alt="Marketplace Icon"> <span>Marketplace</span>
+            <div class="nav-item hidden-on-small">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Page_Icon.png" alt="Pages Icon"> <span>Pages</span>
             </div>
         </div>
-        <div class="nav-item" id="settings">
-            <img src="https://via.placeholder.com/24" alt="Settings Icon"> <span>Settings</span>
+        <div class="nav-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Marketplace_Icon.png" alt="Marketplace Icon"> <span>Marketplace</span>
         </div>
-        <div class="nav-item" id="help-support">
-            <img src="https://via.placeholder.com/24" alt="Help Icon"> <span>Help & Support</span>
+        <div class="nav-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Settings_Icon.png" alt="Settings Icon"> <span>Settings</span>
+        </div>
+        <div class="nav-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Help_Icon.png" alt="Help Icon"> <span>Help & Support</span>
         </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content" id="main-content">
-        <!-- Profile Header -->
-        <div class="profile-header">
-            <img src="https://via.placeholder.com/120" alt="Profile Photo">
-            <div>
-                <h1>Username</h1>
-                <h2>Sample bio goes here.</h2>
-            </div>
-        </div>
-
-        <!-- Status Display -->
-        <div class="status-display">
-            <div class="status-item">
-                <p>Status message 1</p>
-            </div>
-            <div class="status-item">
-                <p>Status message 2</p>
-            </div>
-            <!-- Add more status items here -->
-        </div>
-
-        <!-- Post Form -->
+        <!-- Your main content here -->
         <div class="post-form">
-            <textarea rows="3" placeholder="What's on your mind?"></textarea>
+            <textarea placeholder="What's on your mind?"></textarea>
             <button>Post</button>
         </div>
-
-        <!-- Posts -->
         <div class="post">
-            <div style="display: flex; align-items: center;">
-                <img src="https://via.placeholder.com/120" alt="Profile Photo">
-                <div>
-                    <h1>Username</h1>
-                    <p>Sample post content goes here. This is a placeholder for a post.</p>
-                </div>
-            </div>
+            <img src="https://via.placeholder.com/600x200" alt="Post Image">
+            <p>Post content goes here...</p>
         </div>
-    </div>
-
-    <!-- Settings Dropdown -->
-    <div class="settings-dropdown" id="settings-dropdown">
-        <a href="#">Settings</a>
-        <a href="#">Orders and Payments</a>
-        <a href="#">Dark Mode</a>
-        <a href="#">Language</a>
-        <a href="#">Data Saver</a>
-        <a href="#">Clear Space</a>
-        <a href="#">Early Access</a>
-    </div>
-
-    <!-- Help and Support Dropdown -->
-    <div class="help-support-dropdown" id="help-support-dropdown">
-        <a href="#">Help</a>
-        <a href="#">Creator Support</a>
-        <a href="#">Support Inbox</a>
-        <a href="#">About</a>
-        <a href="#">Report Spam</a>
-        <a href="#">Log Out</a>
+        <div class="post">
+            <img src="https://via.placeholder.com/600x200" alt="Post Image">
+            <p>Another post content...</p>
+        </div>
     </div>
 
     <script>
-        document.getElementById('home').addEventListener('click', function() {
-            // Handle home button click
+        document.getElementById('toggle-friends').addEventListener('click', function() {
+            this.classList.toggle('collapsed');
+            var content = document.querySelector('.toggle-friends-content');
+            if (content.style.display === "none" || content.style.display === "") {
+                content.style.display = "block";
+            } else {
+                content.style.display = "none";
+            }
         });
 
-        document.getElementById('friends').addEventListener('click', function() {
-            // Handle friends button click
-        });
-
-        document.getElementById('messages').addEventListener('click', function() {
-            // Handle messages button click
-        });
-
-        document.getElementById('notifications').addEventListener('click', function() {
-            // Handle notifications button click
-        });
-
-        document.getElementById('profile').addEventListener('click', function() {
-            // Handle profile button click
-        });
-
-        document.querySelector('.sidebar .hide-friends').addEventListener('click', function() {
+        // Function to handle sidebar collapse
+        function toggleSidebar() {
             var sidebar = document.getElementById('sidebar');
-            var friendsContent = document.querySelector('.hide-friends-content');
-            friendsContent.classList.toggle('collapsed');
-        });
+            var mainContent = document.getElementById('main-content');
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('sidebar-collapsed');
+        }
 
-        document.getElementById('settings').addEventListener('click', function() {
-            var settingsDropdown = document.querySelector('.settings-dropdown');
-            settingsDropdown.classList.toggle('show');
-        });
-
-        document.getElementById('help-support').addEventListener('click', function() {
-            var helpSupportDropdown = document.querySelector('.help-support-dropdown');
-            helpSupportDropdown.classList.toggle('show');
-        });
+        // Add event listener for toggling sidebar
+        document.querySelector('.navbar-logo').addEventListener('click', toggleSidebar);
     </script>
 </body>
 </html>
