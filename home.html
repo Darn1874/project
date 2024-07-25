@@ -52,7 +52,10 @@
         .nav-item + .nav-item {
             margin-left: 20px;
         }
-        .profile-header {
+        .profile-header, .status-form, .post-form, .messages-section, .settings-section {
+            display: none;
+        }
+        .profile-header, .status-form, .post-form, .messages-section, .settings-section {
             width: 100%;
             max-width: 1200px;
             background-color: #ffffff;
@@ -88,36 +91,28 @@
             font-size: 1.25rem;
             color: #606770;
         }
-        .profile-details {
-            width: 100%;
-            max-width: 1200px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .post-form, .status-form, .message-form {
+        .status-form, .post-form, .message-form {
             margin-bottom: 20px;
             background-color: #ffffff;
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-        .post-form textarea, .status-form textarea, .message-form textarea, .post-form input[type="file"], .status-form input[type="file"] {
+        .status-form textarea, .post-form textarea, .message-form textarea, .status-form input[type="file"], .post-form input[type="file"] {
             width: 100%;
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 10px;
             border: 1px solid #ddd;
         }
-        .post-form button, .status-form button, .message-form button {
+        .status-form button, .post-form button, .message-form button {
             background-color: #1877f2;
             color: white;
             padding: 10px;
             border-radius: 8px;
             cursor: pointer;
         }
-        .post-form button:hover, .status-form button:hover, .message-form button:hover {
+        .status-form button:hover, .post-form button:hover, .message-form button:hover {
             background-color: #165eab;
         }
         .post, .status {
@@ -222,7 +217,7 @@
         </div>
 
         <!-- Profile Header -->
-        <div class="profile-header">
+        <div class="profile-header" id="profile-section">
             <div class="cover-photo"></div>
             <div class="profile-info">
                 <img src="https://via.placeholder.com/120" alt="Profile Photo" id="profile-photo">
@@ -234,7 +229,7 @@
         </div>
 
         <!-- Status Update Form -->
-        <div class="status-form">
+        <div class="status-form" id="status-section">
             <h2 class="text-lg font-bold mb-4">Update Your Status</h2>
             <form id="status-form">
                 <textarea id="status-text" rows="4" placeholder="What's your status?" class="resize-none"></textarea>
@@ -249,7 +244,7 @@
         </div>
 
         <!-- Post Form -->
-        <div class="post-form">
+        <div class="post-form" id="post-section">
             <h2 class="text-lg font-bold mb-4">Create a Post</h2>
             <form id="post-form">
                 <textarea id="post-text" rows="4" placeholder="What's on your mind?" class="resize-none"></textarea>
@@ -258,158 +253,71 @@
             </form>
         </div>
 
-        <!-- Posts Container -->
-        <div id="posts-container">
+        <!-- Post Container -->
+        <div id="post-container">
             <!-- Posts will be dynamically added here -->
         </div>
 
-        <!-- Messaging Section -->
-        <div id="messages-section">
-            <h2 class="text-xl font-bold mb-4">Messages</h2>
+        <!-- Messages Section -->
+        <div class="messages-section" id="messages-section">
+            <h2 class="text-lg font-bold mb-4">Messages</h2>
             <div class="message-list" id="message-list">
                 <!-- Messages will be dynamically added here -->
             </div>
-            <div class="message-form">
-                <h3 class="text-lg font-bold mb-4">Send a Message</h3>
-                <form id="message-form">
-                    <textarea id="message-text" rows="4" placeholder="Type your message..." class="resize-none"></textarea>
-                    <button type="submit">Send</button>
-                </form>
-            </div>
+            <form id="message-form">
+                <textarea id="message-text" rows="2" placeholder="Type your message..." class="resize-none"></textarea>
+                <button type="submit">Send Message</button>
+            </form>
         </div>
 
         <!-- Settings Section -->
         <div class="settings-section" id="settings-section">
-            <h2 class="text-xl font-bold mb-4">Account Settings</h2>
-            <div class="bg-white rounded-lg shadow-lg p-8 mb-4">
-                <h3 class="text-lg font-bold">Profile Settings</h3>
-                <!-- Add profile settings options here -->
-            </div>
-            <div class="bg-white rounded-lg shadow-lg p-8 mb-4">
-                <h3 class="text-lg font-bold">Change Password</h3>
-                <form id="change-password-form">
-                    <label for="current-password" class="block">Current Password:</label>
-                    <input type="password" id="current-password" class="w-full p-2 border border-gray-300 rounded">
-                    <label for="new-password" class="block mt-4">New Password:</label>
-                    <input type="password" id="new-password" class="w-full p-2 border border-gray-300 rounded">
-                    <button type="submit" class="bg-blue-500 text-white p-2 rounded mt-4">Change Password</button>
-                </form>
-            </div>
-            <div class="bg-white rounded-lg shadow-lg p-8 mb-4">
-                <h3 class="text-lg font-bold">Edit Name</h3>
-                <form id="edit-name-form">
-                    <label for="new-name" class="block">New Name:</label>
-                    <input type="text" id="new-name" class="w-full p-2 border border-gray-300 rounded">
-                    <button type="submit" class="bg-blue-500 text-white p-2 rounded mt-4">Update Name</button>
-                </form>
+            <h2 class="text-lg font-bold mb-4">Settings</h2>
+            <div>
+                <a href="#" id="settings-profile">Profile Settings</a><br>
+                <a href="#" id="settings-password">Change Password</a><br>
+                <a href="#" id="settings-name">Edit Name</a>
             </div>
         </div>
     </div>
 
     <script>
-        // Navbar Toggle for Small Screens
-        const navbarToggle = document.getElementById('navbar-toggle');
-        const navbarMenu = document.querySelector('.navbar-menu');
-        navbarToggle.addEventListener('click', () => {
-            navbarMenu.classList.toggle('show');
+        // JavaScript to toggle the mobile menu
+        document.getElementById('navbar-toggle').addEventListener('click', function() {
+            var menu = document.querySelector('.navbar-menu');
+            menu.classList.toggle('show');
         });
 
-        // Logout Button
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            localStorage.removeItem('user');
-            window.location.href = 'index.html';
+        // JavaScript to handle section display
+        var sections = {
+            'profile': document.getElementById('profile-section'),
+            'messages': document.getElementById('messages-section'),
+            'status': document.getElementById('status-section'),
+            'settings': document.getElementById('settings-section')
+        };
+
+        document.getElementById('profile').addEventListener('click', function() {
+            toggleSection('profile');
+        });
+        document.getElementById('messages').addEventListener('click', function() {
+            toggleSection('messages');
+        });
+        document.getElementById('status').addEventListener('click', function() {
+            toggleSection('status');
+        });
+        document.getElementById('settings').addEventListener('click', function() {
+            toggleSection('settings');
+        });
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            alert('Logging out...');
         });
 
-        // Status Form Submission
-        document.getElementById('status-form').addEventListener('submit', (event) => {
-            event.preventDefault();
-            const statusText = document.getElementById('status-text').value;
-            const statusImage = document.getElementById('status-image').files[0];
-            const statusContainer = document.getElementById('status-container');
-
-            if (statusText || statusImage) {
-                const statusItem = document.createElement('div');
-                statusItem.className = 'status';
-
-                if (statusImage) {
-                    const image = document.createElement('img');
-                    image.src = URL.createObjectURL(statusImage);
-                    statusItem.appendChild(image);
-                }
-
-                if (statusText) {
-                    const text = document.createElement('p');
-                    text.textContent = statusText;
-                    statusItem.appendChild(text);
-                }
-
-                statusContainer.appendChild(statusItem);
-
-                // Set a timer to remove the status after 24 hours (86400000 milliseconds)
-                setTimeout(() => {
-                    statusItem.remove();
-                }, 86400000);
-
-                // Reset form
-                document.getElementById('status-form').reset();
-            }
-        });
-
-        // Post Form Submission
-        document.getElementById('post-form').addEventListener('submit', (event) => {
-            event.preventDefault();
-            const postText = document.getElementById('post-text').value;
-            const postImage = document.getElementById('post-image').files[0];
-            const postsContainer = document.getElementById('posts-container');
-
-            if (postText || postImage) {
-                const postItem = document.createElement('div');
-                postItem.className = 'post';
-
-                if (postImage) {
-                    const image = document.createElement('img');
-                    image.src = URL.createObjectURL(postImage);
-                    postItem.appendChild(image);
-                }
-
-                if (postText) {
-                    const text = document.createElement('p');
-                    text.textContent = postText;
-                    postItem.appendChild(text);
-                }
-
-                postsContainer.appendChild(postItem);
-
-                // Reset form
-                document.getElementById('post-form').reset();
-            }
-        });
-
-        // Message Form Submission
-        document.getElementById('message-form').addEventListener('submit', (event) => {
-            event.preventDefault();
-            const messageText = document.getElementById('message-text').value;
-            const messageList = document.getElementById('message-list');
-
-            if (messageText) {
-                const messageItem = document.createElement('div');
-                messageItem.className = 'message-item';
-
-                const text = document.createElement('p');
-                text.textContent = messageText;
-                messageItem.appendChild(text);
-
-                messageList.appendChild(messageItem);
-
-                // Reset form
-                document.getElementById('message-form').reset();
-            }
-        });
-
-        // Settings Dropdown
-        document.getElementById('settings').addEventListener('click', () => {
-            document.getElementById('settings-dropdown').classList.toggle('show');
-        });
+        function toggleSection(section) {
+            Object.values(sections).forEach(function(sec) {
+                sec.style.display = 'none';
+            });
+            sections[section].style.display = 'block';
+        }
     </script>
 </body>
 </html>
