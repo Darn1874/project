@@ -134,6 +134,7 @@
             display: flex;
             align-items: center;
             margin-top: 10px;
+            flex-wrap: wrap;
         }
         .post-form-buttons button {
             background-color: #4267b2;
@@ -143,6 +144,7 @@
             cursor: pointer;
             border: none;
             margin-right: 5px;
+            margin-bottom: 5px;
         }
         .post-form-buttons button:hover {
             background-color: #365899;
@@ -160,6 +162,7 @@
         }
         .post-actions {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             margin-top: 10px;
         }
@@ -170,6 +173,7 @@
             cursor: pointer;
             font-size: 16px;
             margin-right: 10px;
+            margin-bottom: 5px;
         }
         .post-actions button.liked {
             color: #ff5a5f;
@@ -185,6 +189,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
         }
         .profile-header img {
             width: 120px;
@@ -241,12 +246,13 @@
             background-color: #f0f2f5;
         }
         /* Responsive Styles */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .navbar-search input {
                 width: 100%;
             }
             .sidebar {
                 width: 60px;
+                padding: 10px;
                 overflow-y: visible;
             }
             .sidebar.collapsed {
@@ -269,9 +275,87 @@
             .toggle-friends.collapsed + .toggle-friends-content {
                 display: block;
             }
-            /* Hide specific sections on small screens */
-            .sidebar .nav-item.hidden-on-small {
+            /* Hide specific sections on smaller screens */
+            .sidebar .nav-item span {
                 display: none;
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar-icons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .navbar-search input {
+                width: 100%;
+            }
+            .profile-button img {
+                height: 30px;
+                width: 30px;
+            }
+            .sidebar {
+                width: 50px;
+                padding: 5px;
+                overflow-y: visible;
+            }
+            .sidebar.collapsed {
+                width: 50px;
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            .profile-header img {
+                width: 80px;
+                height: 80px;
+            }
+            .profile-header h1 {
+                font-size: 1.5rem;
+            }
+            .profile-header h2 {
+                font-size: 1rem;
+            }
+            .status-item {
+                max-width: 250px;
+            }
+            .post-form textarea {
+                font-size: 14px;
+            }
+            .post-form-buttons button {
+                padding: 8px;
+                font-size: 14px;
+            }
+            .post img {
+                width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .profile-header img {
+                width: 60px;
+                height: 60px;
+            }
+            .profile-header h1 {
+                font-size: 1.25rem;
+            }
+            .profile-header h2 {
+                font-size: 0.875rem;
+            }
+            .status-item {
+                max-width: 200px;
+            }
+            .post-form textarea {
+                font-size: 12px;
+            }
+            .post-form-buttons button {
+                padding: 6px;
+                font-size: 12px;
+            }
+            .post img {
+                width: 100%;
             }
         }
     </style>
@@ -279,17 +363,16 @@
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <div class="navbar-icons">
-            <img src="https://via.placeholder.com/100x40" alt="Logo" class="navbar-logo">
-            <div class="navbar-search">
-                <input type="text" placeholder="Search...">
-            </div>
-            <div class="profile-button" id="profile-button">
-                <img src="https://via.placeholder.com/40" alt="Profile Photo">
-            </div>
+        <div class="navbar-logo">
+            <img src="https://via.placeholder.com/100x40" alt="Logo">
+        </div>
+        <div class="navbar-search">
+            <input type="text" placeholder="Search...">
         </div>
         <div class="navbar-icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Home_Icon.svg/1024px-Home_Icon.svg.png" alt="Home Icon" onclick="window.location.href='home.html'">
+            <div class="profile-button" id="profile-button">
+                <img src="https://via.placeholder.com/40" alt="Profile Icon">
+            </div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Notifications_Icon.svg/1024px-Notifications_Icon.svg.png" alt="Notifications Icon">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Message_Icon.svg/1200px-Message_Icon.svg.png" alt="Messages Icon">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Profile_Icon.svg/1024px-Profile_Icon.svg.png" alt="Profile Icon" onclick="window.location.href='profile.html'">
@@ -471,7 +554,6 @@
             var shareCountElem = postActions.querySelector('.share-count');
             var shareCount = parseInt(shareCountElem.textContent.split(' ')[0]);
             shareCountElem.textContent = (shareCount + 1) + ' Shares';
-            alert('Post shared');
         }
     </script>
 </body>
