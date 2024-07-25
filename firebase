@@ -26,6 +26,38 @@
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+// Import necessary Firebase modules
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+
+// Initialize Firebase Auth
+const auth = getAuth();
+
+// Sign Up New Users
+const signUp = (email, password) => {
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed up successfully
+      const user = userCredential.user;
+      console.log("User signed up:", user);
+    })
+    .catch((error) => {
+      console.error("Error signing up:", error);
+    });
+};
+
+// Log In Existing Users
+const logIn = (email, password) => {
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Logged in successfully
+      const user = userCredential.user;
+      console.log("User logged in:", user);
+    })
+    .catch((error) => {
+      console.error("Error logging in:", error);
+    });
+};
+
     </script>
 </body>
 </html>
