@@ -59,6 +59,7 @@
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             transition: width 0.3s;
+            overflow-y: auto;
         }
         .sidebar.collapsed {
             width: 60px;
@@ -85,10 +86,17 @@
             padding: 10px;
             background-color: #f0f2f5;
             border-radius: 8px;
+            margin-bottom: 15px;
         }
         .hide-friends img {
             height: 24px;
             width: 24px;
+        }
+        .hide-friends-content {
+            display: block;
+        }
+        .hide-friends.collapsed + .hide-friends-content {
+            display: none;
         }
         .main-content {
             margin-left: 270px;
@@ -198,7 +206,7 @@
         /* Responsive Styles */
         @media (max-width: 768px) {
             .navbar-search input {
-                width: 80%;
+                width: 100%;
             }
             .sidebar {
                 width: 200px;
@@ -215,7 +223,13 @@
                 width: 100%;
             }
             .hide-friends {
+                display: flex;
+            }
+            .hide-friends-content {
                 display: none;
+            }
+            .hide-friends.collapsed + .hide-friends-content {
+                display: block;
             }
         }
     </style>
@@ -228,7 +242,7 @@
             <input type="text" placeholder="Search...">
         </div>
         <div class="navbar-icons">
-            <img src="https://via.placeholder.com/24" alt="Home Icon" id="home">
+            <img src="<box-icon type='solid' name='home'></box-icon>" alt="Home Icon" id="home">
             <img src="https://via.placeholder.com/24" alt="Friends Icon" id="friends">
             <img src="https://via.placeholder.com/24" alt="Messages Icon" id="messages">
             <img src="https://via.placeholder.com/24" alt="Notifications Icon" id="notifications">
@@ -240,28 +254,30 @@
     <div class="sidebar" id="sidebar">
         <div class="hide-friends" id="hide-friends">
             <span>Friends</span>
-            <img src="https://via.placeholder.com/24" alt="Hide Icon">
+            <img src="https://via.placeholder.com/24" alt="Toggle Icon">
         </div>
-        <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Home Icon"> <span>Home</span>
+        <div class="hide-friends-content">
+            <div class="nav-item">
+                <img src="https://via.placeholder.com/24" alt="Home Icon"> <span>Home</span>
+            </div>
+            <div class="nav-item">
+                <img src="https://via.placeholder.com/24" alt="Friends Icon"> <span>Friends</span>
+            </div>
+            <div class="nav-item">
+                <img src="https://via.placeholder.com/24" alt="Groups Icon"> <span>Groups</span>
+            </div>
+            <div class="nav-item">
+                <img src="https://via.placeholder.com/24" alt="Pages Icon"> <span>Pages</span>
+            </div>
+            <div class="nav-item">
+                <img src="https://via.placeholder.com/24" alt="Marketplace Icon"> <span>Marketplace</span>
+            </div>
         </div>
-        <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Friends Icon"> <span>Friends</span>
+        <div class="nav-item" id="settings">
+            <img src="https://via.placeholder.com/24" alt="Settings Icon"> <span>Settings</span>
         </div>
-        <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Groups Icon"> <span>Groups</span>
-        </div>
-        <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Pages Icon"> <span>Pages</span>
-        </div>
-        <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Marketplace Icon"> <span>Marketplace</span>
-        </div>
-        <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Watch Icon"> <span>Watch</span>
-        </div>
-        <div class="nav-item">
-            <img src="https://via.placeholder.com/24" alt="Memories Icon"> <span>Memories</span>
+        <div class="nav-item" id="help-support">
+            <img src="https://via.placeholder.com/24" alt="Help Icon"> <span>Help & Support</span>
         </div>
     </div>
 
@@ -347,16 +363,10 @@
             // Handle profile button click
         });
 
-        document.querySelector('.sidebar .nav-item').addEventListener('click', function() {
+        document.querySelector('.sidebar .hide-friends').addEventListener('click', function() {
             var sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('collapsed');
-            document.getElementById('main-content').classList.toggle('sidebar-collapsed');
-        });
-
-        document.getElementById('hide-friends').addEventListener('click', function() {
-            var sidebar = document.getElementById('sidebar');
-            var friends = sidebar.querySelector('.nav-item:nth-child(2)');
-            friends.style.display = (friends.style.display === 'none') ? 'flex' : 'none';
+            var friendsContent = document.querySelector('.hide-friends-content');
+            friendsContent.classList.toggle('collapsed');
         });
 
         document.getElementById('settings').addEventListener('click', function() {
