@@ -91,6 +91,29 @@
             font-size: 1.25rem;
             color: #606770;
         }
+        .status-scroll-container {
+            width: 100%;
+            max-width: 1200px;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 0;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .status-item {
+            display: inline-block;
+            width: 250px;
+            background-color: #f0f2f5;
+            border-radius: 8px;
+            margin-right: 10px;
+            padding: 10px;
+            vertical-align: top;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .status-item p {
+            margin: 0;
+        }
         .status-form textarea, .post-form textarea, .message-form textarea, .status-form input[type="file"], .post-form input[type="file"], .profile-edit-section input {
             width: 100%;
             padding: 10px;
@@ -221,14 +244,19 @@
             </div>
         </div>
 
+        <!-- Status Updates -->
+        <div class="status-scroll-container" id="status-scroll-container">
+            <!-- Status updates will be dynamically added here -->
+        </div>
+
         <!-- Profile Header -->
         <div class="profile-header" id="profile-section">
             <div class="cover-photo"></div>
             <div class="profile-info">
-                <img src="https://via.placeholder.com/120" alt="Profile Photo" id="profile-photo">
+                <img src="https://via.placeholder.com/120" alt="Profile Picture">
                 <div>
-                    <h1 id="username">Username</h1>
-                    <h2 id="display-name">Display Name</h2>
+                    <h1>John Doe</h1>
+                    <h2>Software Engineer</h2>
                 </div>
             </div>
         </div>
@@ -238,11 +266,15 @@
             <h2 class="text-lg font-bold mb-4">Edit Profile</h2>
             <form id="profile-edit-form">
                 <label for="home">Home:</label>
-                <input type="text" id="home" placeholder="Home">
+                <input type="text" id="home" placeholder="Your Home">
                 <label for="education">Education:</label>
-                <input type="text" id="education" placeholder="Education">
+                <input type="text" id="education" placeholder="Your Education">
                 <label for="gender">Gender:</label>
-                <input type="text" id="gender" placeholder="Gender">
+                <select id="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
                 <label for="dob">Date of Birth:</label>
                 <input type="date" id="dob">
                 <label for="about">About:</label>
@@ -259,13 +291,6 @@
                 <input type="file" id="status-image">
                 <button type="submit">Update Status</button>
             </form>
-            <div id="status-list">
-                <!-- Example status item -->
-                <div class="status" id="status-1">
-                    <p>Example status</p>
-                    <button type="button" onclick="deleteStatus('status-1')">Delete</button>
-                </div>
-            </div>
         </div>
 
         <!-- Post Form -->
@@ -302,6 +327,54 @@
     </div>
 
     <script>
+        // JavaScript to handle status updates
+        document.getElementById('status-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var statusText = document.getElementById('status-text').value;
+            var statusImage = document.getElementById('status-image').files[0];
+
+            if (statusText.trim() === '' && !statusImage) {
+                alert('Please enter a status or select an image.');
+                return;
+            }
+
+            var statusScrollContainer = document.getElementById('status-scroll-container');
+
+            // Create a new status item
+            var newStatus = document.createElement('div');
+            newStatus.classList.add('status-item');
+
+            // Add status text
+            if (statusText.trim() !== '') {
+                var statusContent = document.createElement('p');
+                statusContent.textContent = statusText;
+                newStatus.appendChild(statusContent);
+            }
+
+            // Add status image
+            if (statusImage) {
+                var statusImageElement = document.createElement('img');
+                statusImageElement.src = URL.createObjectURL(statusImage);
+                newStatus.appendChild(statusImageElement);
+            }
+
+            // Add delete button
+            var deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                statusScrollContainer.removeChild(newStatus);
+            };
+            newStatus.appendChild(deleteButton);
+
+            // Append the new status item to the status scroll container
+            statusScrollContainer.appendChild(newStatus);
+
+            // Clear the form
+            document.getElementById('status-text').value = '';
+            document.getElementById('status-image').value = '';
+        });
+
         // JavaScript to handle message sending
         document.getElementById('send-message-button').addEventListener('click', function() {
             var messageText = document.getElementById('message-text').value;
@@ -380,13 +453,6 @@
                 sec.style.display = 'none';
             });
             sections[section].style.display = 'block';
-        }
-
-        function deleteStatus(statusId) {
-            var statusElement = document.getElementById(statusId);
-            if (statusElement) {
-                statusElement.remove();
-            }
         }
     </script>
 </body>
