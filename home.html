@@ -171,6 +171,13 @@
             font-size: 16px;
             margin-right: 10px;
         }
+        .post-actions button.liked {
+            color: #ff5a5f;
+        }
+        .post-actions .like-count, .post-actions .comment-count, .post-actions .share-count {
+            font-size: 14px;
+            color: #606770;
+        }
         .profile-header {
             background-color: white;
             padding: 20px;
@@ -282,11 +289,37 @@
             </div>
         </div>
         <div class="navbar-icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Home_Icon.svg/1024px-Home_Icon.svg.png" alt="Home Icon" onclick="window.location.href='homepage.html'">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Friends.png" alt="Friends Icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Home_Icon.svg/1024px-Home_Icon.svg.png" alt="Home Icon" onclick="window.location.href='home.html'">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Notifications_Icon.svg/1024px-Notifications_Icon.svg.png" alt="Notifications Icon">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Message_Icon.svg/1200px-Message_Icon.svg.png" alt="Messages Icon">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Profile_Icon.svg/1024px-Profile_Icon.svg.png" alt="Profile Icon" onclick="window.location.href='profile.html'">
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="nav-item">
+            <img src="https://via.placeholder.com/24" alt="Home Icon">
+            <span>Home</span>
+        </div>
+        <div class="nav-item">
+            <img src="https://via.placeholder.com/24" alt="Profile Icon">
+            <span>Profile</span>
+        </div>
+        <div class="nav-item">
+            <img src="https://via.placeholder.com/24" alt="Messages Icon">
+            <span>Messages</span>
+        </div>
+        <div class="nav-item">
+            <img src="https://via.placeholder.com/24" alt="Notifications Icon">
+            <span>Notifications</span>
+        </div>
+        <div class="nav-item toggle-friends" id="toggle-friends">
+            <span>Friends</span>
+            <img src="https://via.placeholder.com/24" alt="Toggle Icon">
+        </div>
+        <div class="toggle-friends-content">
+            <!-- Friends List Content Here -->
         </div>
     </div>
 
@@ -336,6 +369,9 @@
                 <button onclick="likePost(this)">Like</button>
                 <button onclick="commentOnPost(this)">Comment</button>
                 <button onclick="sharePost(this)">Share</button>
+                <span class="like-count">0 Likes</span>
+                <span class="comment-count">0 Comments</span>
+                <span class="share-count">0 Shares</span>
             </div>
         </div>
         <div class="post">
@@ -345,6 +381,9 @@
                 <button onclick="likePost(this)">Like</button>
                 <button onclick="commentOnPost(this)">Comment</button>
                 <button onclick="sharePost(this)">Share</button>
+                <span class="like-count">0 Likes</span>
+                <span class="comment-count">0 Comments</span>
+                <span class="share-count">0 Shares</span>
             </div>
         </div>
     </div>
@@ -404,25 +443,35 @@
 
         // Function to like a post
         function likePost(button) {
+            var postActions = button.closest('.post-actions');
+            var likeCountElem = postActions.querySelector('.like-count');
             var isLiked = button.classList.toggle('liked');
-            button.textContent = isLiked ? 'Liked' : 'Like';
+            var likeCount = parseInt(likeCountElem.textContent.split(' ')[0]);
+            likeCountElem.textContent = (isLiked ? likeCount + 1 : likeCount - 1) + ' Likes';
         }
 
         // Function to comment on a post
         function commentOnPost(button) {
-            var postContent = button.closest('.post');
+            var postActions = button.closest('.post-actions');
+            var commentCountElem = postActions.querySelector('.comment-count');
             var comment = prompt('Enter your comment:');
             if (comment) {
                 var commentSection = document.createElement('div');
                 commentSection.className = 'comment';
                 commentSection.textContent = comment;
-                postContent.appendChild(commentSection);
+                button.closest('.post').appendChild(commentSection);
+                var commentCount = parseInt(commentCountElem.textContent.split(' ')[0]);
+                commentCountElem.textContent = (commentCount + 1) + ' Comments';
             }
         }
 
         // Function to share a post
         function sharePost(button) {
-            alert('Share feature not implemented');
+            var postActions = button.closest('.post-actions');
+            var shareCountElem = postActions.querySelector('.share-count');
+            var shareCount = parseInt(shareCountElem.textContent.split(' ')[0]);
+            shareCountElem.textContent = (shareCount + 1) + ' Shares';
+            alert('Post shared');
         }
     </script>
 </body>
