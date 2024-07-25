@@ -58,6 +58,60 @@ const logIn = (email, password) => {
     });
 };
 
+import { getDatabase, ref, set, get, child } from "firebase/database";
+
+// Initialize Realtime Database
+const db = getDatabase();
+
+// Write Data
+const writeUserData = (userId, name, email) => {
+  set(ref(db, 'users/' + userId), {
+    username: name,
+    email: email
+  });
+};
+
+// Read Data
+const fetchUserData = (userId) => {
+  const dbRef = ref(getDatabase());
+  get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+    if (snapshot.exists()) {
+      console.log(snapshot.val());
+    } else {
+      console.log("No data available");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+};
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+
+// Initialize Firestore
+const db = getFirestore();
+
+// Add a new document
+const addUser = async (userId, name, email) => {
+  try {
+    const docRef = await addDoc(collection(db, "users"), {
+      userId,
+      name,
+      email
+    });
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+
+// Get all users
+const getUsers = async () => {
+  const querySnapshot = await getDocs(collection(db, "users"));
+  querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} => ${doc.data()}`);
+  });
+};
+
+
     </script>
 </body>
 </html>
