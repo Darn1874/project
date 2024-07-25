@@ -52,10 +52,10 @@
         .nav-item + .nav-item {
             margin-left: 20px;
         }
-        .profile-header, .status-form, .post-form, .messages-section, .settings-section {
+        .profile-header, .status-form, .post-form, .messages-section, .settings-section, .profile-edit-section {
             display: none;
         }
-        .profile-header, .status-form, .post-form, .messages-section, .settings-section {
+        .profile-header, .status-form, .post-form, .messages-section, .settings-section, .profile-edit-section {
             width: 100%;
             max-width: 1200px;
             background-color: #ffffff;
@@ -91,21 +91,21 @@
             font-size: 1.25rem;
             color: #606770;
         }
-        .status-form textarea, .post-form textarea, .message-form textarea, .status-form input[type="file"], .post-form input[type="file"] {
+        .status-form textarea, .post-form textarea, .message-form textarea, .status-form input[type="file"], .post-form input[type="file"], .profile-edit-section input {
             width: 100%;
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 10px;
             border: 1px solid #ddd;
         }
-        .status-form button, .post-form button, .message-form button {
+        .status-form button, .post-form button, .message-form button, .profile-edit-section button {
             background-color: #1877f2;
             color: white;
             padding: 10px;
             border-radius: 8px;
             cursor: pointer;
         }
-        .status-form button:hover, .post-form button:hover, .message-form button:hover {
+        .status-form button:hover, .post-form button:hover, .message-form button:hover, .profile-edit-section button:hover {
             background-color: #165eab;
         }
         .post, .status {
@@ -136,9 +136,21 @@
             padding: 10px;
             border-radius: 8px;
             background-color: #f0f2f5;
+            position: relative;
         }
-        .message-item p {
-            margin: 0;
+        .message-item button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .message-item button:hover {
+            background-color: #e60000;
         }
         .settings-dropdown {
             display: none;
@@ -221,6 +233,24 @@
             </div>
         </div>
 
+        <!-- Profile Edit Form -->
+        <div class="profile-edit-section" id="profile-edit-section">
+            <h2 class="text-lg font-bold mb-4">Edit Profile</h2>
+            <form id="profile-edit-form">
+                <label for="home">Home:</label>
+                <input type="text" id="home" placeholder="Home">
+                <label for="education">Education:</label>
+                <input type="text" id="education" placeholder="Education">
+                <label for="gender">Gender:</label>
+                <input type="text" id="gender" placeholder="Gender">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob">
+                <label for="about">About:</label>
+                <textarea id="about" rows="4" placeholder="About yourself"></textarea>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+
         <!-- Status Update Form -->
         <div class="status-form" id="status-section">
             <h2 class="text-lg font-bold mb-4">Update Your Status</h2>
@@ -229,6 +259,13 @@
                 <input type="file" id="status-image">
                 <button type="submit">Update Status</button>
             </form>
+            <div id="status-list">
+                <!-- Example status item -->
+                <div class="status" id="status-1">
+                    <p>Example status</p>
+                    <button type="button" onclick="deleteStatus('status-1')">Delete</button>
+                </div>
+            </div>
         </div>
 
         <!-- Post Form -->
@@ -285,6 +322,14 @@
             messageContent.textContent = messageText;
             newMessage.appendChild(messageContent);
 
+            // Add delete button to the message
+            var deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                messageList.removeChild(newMessage);
+            };
+            newMessage.appendChild(deleteButton);
+
             // Append the new message item to the message list
             messageList.appendChild(newMessage);
 
@@ -307,7 +352,8 @@
             'messages': document.getElementById('messages-section'),
             'status': document.getElementById('status-section'),
             'settings': document.getElementById('settings-section'),
-            'post': document.getElementById('post-section')
+            'post': document.getElementById('post-section'),
+            'profile-edit': document.getElementById('profile-edit-section')
         };
 
         document.getElementById('profile').addEventListener('click', function() {
@@ -325,12 +371,22 @@
         document.getElementById('logout-btn').addEventListener('click', function() {
             alert('Logging out...');
         });
+        document.getElementById('settings-profile').addEventListener('click', function() {
+            toggleSection('profile-edit');
+        });
 
         function toggleSection(section) {
             Object.values(sections).forEach(function(sec) {
                 sec.style.display = 'none';
             });
             sections[section].style.display = 'block';
+        }
+
+        function deleteStatus(statusId) {
+            var statusElement = document.getElementById(statusId);
+            if (statusElement) {
+                statusElement.remove();
+            }
         }
     </script>
 </body>
