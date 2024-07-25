@@ -59,6 +59,52 @@
         .nav-item + .nav-item {
             margin-left: 20px;
         }
+        .status-display {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .status-item {
+            background-color: #f0f2f5;
+            padding: 10px;
+            border-radius: 8px;
+            margin-right: 10px;
+            flex: 0 0 auto;
+            max-width: 300px;
+        }
+        .status-item p {
+            margin: 0;
+        }
+        .homepage-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .homepage-button {
+            background-color: #1877f2;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            width: 150px;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+        .homepage-button:hover {
+            background-color: #165eab;
+        }
         .profile-header, .status-form, .post-form, .messages-section, .settings-section {
             display: none;
         }
@@ -168,56 +214,6 @@
         .settings-dropdown a:hover, .help-support-dropdown a:hover {
             background-color: #f0f2f5;
         }
-        .status-display {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            padding: 10px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .status-item {
-            background-color: #f0f2f5;
-            padding: 10px;
-            border-radius: 8px;
-            margin-right: 10px;
-            flex: 0 0 auto;
-            max-width: 300px;
-        }
-        .status-item p {
-            margin: 0;
-        }
-        .menu-button {
-            cursor: pointer;
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            background-color: #1877f2;
-            text-align: center;
-        }
-        .menu-dropdown {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            width: 200px;
-            z-index: 10;
-        }
-        .menu-dropdown a {
-            display: block;
-            padding: 10px;
-            color: #333;
-            text-decoration: none;
-        }
-        .menu-dropdown a:hover {
-            background-color: #f0f2f5;
-        }
         .icon-button {
             margin-left: 10px;
             display: flex;
@@ -306,6 +302,16 @@
             <div class="status-item">
                 <p>Sample Status Message</p>
             </div>
+        </div>
+
+        <!-- Homepage Buttons -->
+        <div class="homepage-buttons">
+            <a href="#" class="homepage-button">Create New Account</a>
+            <a href="#" class="homepage-button">Invite Friends</a>
+            <a href="#" class="homepage-button">Reels</a>
+            <a href="#" class="homepage-button">Groups</a>
+            <a href="#" class="homepage-button">Pages</a>
+            <a href="#" class="homepage-button">Memories</a>
         </div>
 
         <!-- Profile Header -->
