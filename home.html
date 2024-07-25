@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             background-color: #f0f2f5;
@@ -49,14 +48,21 @@
             margin-left: 10px;
             color: white;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .nav-item img {
+            height: 24px;
+            width: 24px;
+            margin-right: 8px;
         }
         .nav-item + .nav-item {
             margin-left: 20px;
         }
-        .profile-header, .status-form, .post-form, .messages-section, .settings-section, .profile-edit-section {
+        .profile-header, .status-form, .post-form, .messages-section, .settings-section {
             display: none;
         }
-        .profile-header, .status-form, .post-form, .messages-section, .settings-section, .profile-edit-section {
+        .profile-header, .status-form, .post-form, .messages-section, .settings-section {
             width: 100%;
             max-width: 1200px;
             background-color: #ffffff;
@@ -92,44 +98,21 @@
             font-size: 1.25rem;
             color: #606770;
         }
-        .status-scroll-container {
-            width: 100%;
-            max-width: 1200px;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 10px 0;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .status-item {
-            display: inline-block;
-            width: 250px;
-            background-color: #f0f2f5;
-            border-radius: 8px;
-            margin-right: 10px;
-            padding: 10px;
-            vertical-align: top;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .status-item p {
-            margin: 0;
-        }
-        .status-form textarea, .post-form textarea, .message-form textarea, .status-form input[type="file"], .post-form input[type="file"], .profile-edit-section input {
+        .status-form textarea, .post-form textarea, .message-form textarea, .status-form input[type="file"], .post-form input[type="file"] {
             width: 100%;
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 10px;
             border: 1px solid #ddd;
         }
-        .status-form button, .post-form button, .message-form button, .profile-edit-section button {
+        .status-form button, .post-form button, .message-form button {
             background-color: #1877f2;
             color: white;
             padding: 10px;
             border-radius: 8px;
             cursor: pointer;
         }
-        .status-form button:hover, .post-form button:hover, .message-form button:hover, .profile-edit-section button:hover {
+        .status-form button:hover, .post-form button:hover, .message-form button:hover {
             background-color: #165eab;
         }
         .post, .status {
@@ -160,23 +143,11 @@
             padding: 10px;
             border-radius: 8px;
             background-color: #f0f2f5;
-            position: relative;
         }
-        .message-item button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            padding: 5px;
+        .message-item p {
+            margin: 0;
         }
-        .message-item button:hover {
-            background-color: #e60000;
-        }
-        .settings-dropdown {
+        .settings-dropdown, .help-support-dropdown {
             display: none;
             position: absolute;
             top: 100%;
@@ -188,36 +159,75 @@
             width: 200px;
             z-index: 10;
         }
-        .settings-dropdown a {
+        .settings-dropdown a, .help-support-dropdown a {
             display: block;
             padding: 10px;
             color: #333;
             text-decoration: none;
         }
-        .settings-dropdown a:hover {
+        .settings-dropdown a:hover, .help-support-dropdown a:hover {
             background-color: #f0f2f5;
         }
-        .add-status-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #1877f2;
+        .status-display {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .status-item {
+            background-color: #f0f2f5;
+            padding: 10px;
+            border-radius: 8px;
+            margin-right: 10px;
+            flex: 0 0 auto;
+            max-width: 300px;
+        }
+        .status-item p {
+            margin: 0;
+        }
+        .menu-button {
+            cursor: pointer;
             color: white;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #1877f2;
+            text-align: center;
+        }
+        .menu-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            width: 200px;
+            z-index: 10;
+        }
+        .menu-dropdown a {
+            display: block;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+        .menu-dropdown a:hover {
+            background-color: #f0f2f5;
+        }
+        .icon-button {
+            margin-left: 10px;
             display: flex;
             align-items: center;
-            justify-content: center;
             cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            z-index: 100;
         }
-        .add-status-btn:hover {
-            background-color: #165eab;
-        }
-        .add-status-btn i {
-            font-size: 1.5rem;
+        .icon-button img {
+            height: 24px;
+            width: 24px;
+            margin-right: 8px;
         }
         @media (max-width: 640px) {
             .navbar-toggle {
@@ -253,56 +263,70 @@
             <div class="navbar-menu">
                 <h1 class="text-2xl font-bold text-white sm:flex-1">Dashboard</h1>
                 <div class="flex flex-wrap sm:flex-nowrap">
-                    <span class="nav-item" id="profile">User Profile</span>
-                    <span class="nav-item" id="messages">Messages</span>
-                    <span class="nav-item" id="status">Status</span>
-                    <span class="nav-item" id="settings">Settings</span>
-                    <button id="logout-btn" class="nav-item">Logout</button>
+                    <div class="nav-item" id="home">
+                        <img src="https://via.placeholder.com/24" alt="Home Icon"> Home
+                    </div>
+                    <div class="nav-item" id="friends">
+                        <img src="https://via.placeholder.com/24" alt="Friends Icon"> Friends
+                    </div>
+                    <div class="nav-item" id="messages">
+                        <img src="https://via.placeholder.com/24" alt="Messages Icon"> Messages
+                    </div>
+                    <div class="nav-item" id="notifications">
+                        <img src="https://via.placeholder.com/24" alt="Notifications Icon"> Notifications
+                    </div>
+                    <div class="nav-item" id="videos">
+                        <img src="https://via.placeholder.com/24" alt="Videos Icon"> Videos
+                    </div>
+                    <div class="menu-button" id="menu-button">Menu</div>
+                </div>
+                <div class="settings-dropdown" id="settings-dropdown">
+                    <a href="#" id="settings">Settings</a>
+                    <a href="#" id="orders">Orders & Payments</a>
+                    <a href="#" id="dark-mode">Dark Mode</a>
+                    <a href="#" id="language">Language</a>
+                    <a href="#" id="data-saver">Data Saver</a>
+                    <a href="#" id="clear-space">Clear Space</a>
+                    <a href="#" id="early-access">Early Access</a>
+                </div>
+                <div class="help-support-dropdown" id="help-support-dropdown">
+                    <a href="#" id="help">Help</a>
+                    <a href="#" id="creator-support">Creator Support</a>
+                    <a href="#" id="support-inbox">Support Inbox</a>
+                    <a href="#" id="about">About</a>
+                    <a href="#" id="report-spam">Report Spam</a>
+                    <a href="#" id="logout">Log Out</a>
                 </div>
             </div>
         </div>
 
-        <!-- Status Scroll Container -->
-        <div class="status-scroll-container" id="status-scroll-container">
+        <!-- Status Display -->
+        <div class="status-display">
             <!-- Status items will be dynamically added here -->
+            <div class="status-item">
+                <p>Sample Status Message</p>
+            </div>
         </div>
 
-        <!-- Add Status Button -->
-        <div class="add-status-btn" id="add-status-btn">
-            <i class="fas fa-plus"></i>
-        </div>
-
-        <!-- Profile Section -->
+        <!-- Profile Header -->
         <div class="profile-header" id="profile-section">
             <div class="cover-photo"></div>
             <div class="profile-info">
-                <img src="https://via.placeholder.com/120" alt="Profile Picture">
+                <img src="https://via.placeholder.com/120" alt="Profile Photo" id="profile-photo">
                 <div>
-                    <h1>John Doe</h1>
-                    <h2>Software Engineer</h2>
+                    <h1 id="username">Username</h1>
+                    <h2 id="display-name">Display Name</h2>
                 </div>
             </div>
         </div>
 
-        <!-- Profile Edit Form -->
-        <div class="profile-edit-section" id="profile-edit-section">
-            <h2 class="text-lg font-bold mb-4">Edit Profile</h2>
-            <form id="profile-edit-form">
-                <label for="home">Home:</label>
-                <input type="text" id="home" placeholder="Your Home">
-                <label for="education">Education:</label>
-                <input type="text" id="education" placeholder="Your Education">
-                <label for="gender">Gender:</label>
-                <select id="gender">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select>
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob">
-                <label for="about">About:</label>
-                <textarea id="about" rows="4" placeholder="About yourself"></textarea>
-                <button type="submit">Save Changes</button>
+        <!-- Status Update Form -->
+        <div class="status-form" id="status-section">
+            <h2 class="text-lg font-bold mb-4">Update Your Status</h2>
+            <form id="status-form">
+                <textarea id="status-text" rows="4" placeholder="What's your status?" class="resize-none"></textarea>
+                <input type="file" id="status-image">
+                <button type="submit">Update Status</button>
             </form>
         </div>
 
@@ -340,54 +364,6 @@
     </div>
 
     <script>
-        // JavaScript to handle status updates
-        document.getElementById('status-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            var statusText = document.getElementById('status-text').value;
-            var statusImage = document.getElementById('status-image').files[0];
-
-            if (statusText.trim() === '' && !statusImage) {
-                alert('Please enter a status or select an image.');
-                return;
-            }
-
-            var statusScrollContainer = document.getElementById('status-scroll-container');
-
-            // Create a new status item
-            var newStatus = document.createElement('div');
-            newStatus.classList.add('status-item');
-
-            // Add status text
-            if (statusText.trim() !== '') {
-                var statusContent = document.createElement('p');
-                statusContent.textContent = statusText;
-                newStatus.appendChild(statusContent);
-            }
-
-            // Add status image
-            if (statusImage) {
-                var statusImageElement = document.createElement('img');
-                statusImageElement.src = URL.createObjectURL(statusImage);
-                newStatus.appendChild(statusImageElement);
-            }
-
-            // Add delete button
-            var deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.onclick = function() {
-                statusScrollContainer.removeChild(newStatus);
-            };
-            newStatus.appendChild(deleteButton);
-
-            // Append the new status item to the status scroll container
-            statusScrollContainer.appendChild(newStatus);
-
-            // Clear the form
-            document.getElementById('status-text').value = '';
-            document.getElementById('status-image').value = '';
-        });
-
         // JavaScript to handle message sending
         document.getElementById('send-message-button').addEventListener('click', function() {
             var messageText = document.getElementById('message-text').value;
@@ -407,14 +383,6 @@
             var messageContent = document.createElement('p');
             messageContent.textContent = messageText;
             newMessage.appendChild(messageContent);
-
-            // Add delete button to the message
-            var deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.onclick = function() {
-                messageList.removeChild(newMessage);
-            };
-            newMessage.appendChild(deleteButton);
 
             // Append the new message item to the message list
             messageList.appendChild(newMessage);
@@ -436,33 +404,37 @@
         var sections = {
             'profile': document.getElementById('profile-section'),
             'messages': document.getElementById('messages-section'),
-            'status': document.getElementById('status-scroll-container'),
+            'status': document.getElementById('status-section'),
             'settings': document.getElementById('settings-section'),
-            'post': document.getElementById('post-section'),
-            'profile-edit': document.getElementById('profile-edit-section')
+            'post': document.getElementById('post-section')
         };
 
-        document.getElementById('profile').addEventListener('click', function() {
-            toggleSection('profile');
+        document.getElementById('home').addEventListener('click', function() {
+            toggleSection('home');
+        });
+        document.getElementById('friends').addEventListener('click', function() {
+            toggleSection('friends');
         });
         document.getElementById('messages').addEventListener('click', function() {
             toggleSection('messages');
         });
-        document.getElementById('status').addEventListener('click', function() {
-            toggleSection('status');
+        document.getElementById('notifications').addEventListener('click', function() {
+            toggleSection('notifications');
+        });
+        document.getElementById('videos').addEventListener('click', function() {
+            toggleSection('videos');
+        });
+        document.getElementById('menu-button').addEventListener('click', function() {
+            var menuDropdown = document.getElementById('menu-dropdown');
+            menuDropdown.classList.toggle('show');
         });
         document.getElementById('settings').addEventListener('click', function() {
-            toggleSection('settings');
+            var settingsDropdown = document.getElementById('settings-dropdown');
+            settingsDropdown.classList.toggle('show');
         });
-        document.getElementById('logout-btn').addEventListener('click', function() {
-            alert('Logging out...');
-        });
-        document.getElementById('settings-profile').addEventListener('click', function() {
-            toggleSection('profile-edit');
-        });
-
-        document.getElementById('add-status-btn').addEventListener('click', function() {
-            toggleSection('status');
+        document.getElementById('help-support').addEventListener('click', function() {
+            var helpSupportDropdown = document.getElementById('help-support-dropdown');
+            helpSupportDropdown.classList.toggle('show');
         });
 
         function toggleSection(section) {
